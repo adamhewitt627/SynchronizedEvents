@@ -10,10 +10,7 @@
     <Authors>Adam Hewitt</Authors>
     <PackageProjectUrl>https://github.com/adamhewitt627/SynchronizedEvents</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/adamhewitt627/SynchronizedEvents/blob/master/LICENSE</PackageLicenseUrl>
-    <Description>
-      Event handlers that marshal the invoke back to the SynchronizationContext on which the registration occurs. 
-      This is helpful in data-binding (WPF, UWP, etc) where INotifyPropertyChanged needs posted on the UI thread by a shared library that doesn't have a Dispatcher.
-    </Description>
+    <Description>Event handlers that marshal the invoke back to the SynchronizationContext on which the registration occurs. This is helpful in data-binding (WPF, UWP, etc) where INotifyPropertyChanged needs posted on the UI thread by a shared library that doesn't have a Dispatcher.</Description>
   </PropertyGroup>
 
   <ItemGroup>
