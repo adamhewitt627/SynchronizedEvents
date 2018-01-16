@@ -1,1 +1,4 @@
-# SynchronizedEvents
+# SynchronizedEvents [![Build status](https://ci.appveyor.com/api/projects/status/js78tnv75sxlly88?svg=true)](https://ci.appveyor.com/project/adamhewitt627/synchronizedevents) [![NuGet Status](http://img.shields.io/nuget/v/SynchronizedEvents.svg?style=flat)](https://www.nuget.org/packages/SynchronizedEvents/)
+Event handlers that marshal the invoke back to the SynchronizationContext on which the registration occurs. This is helpful in data-binding (WPF, UWP, etc) where INotifyPropertyChanged needs posted on the UI thread by a shared library that doesn't have a Dispatcher.
+
+Includes a built-in `INotifyPropertyChanged` implementation [BindableBase](BindableBase.cs) to serve as an example and common base class for view models.
