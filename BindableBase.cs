@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace SynchronizedEvents
 {
-    public abstract class BindableBase
+    public abstract class BindableBase : INotifyPropertyChanged
     {
         private readonly ContextPropertyChanged _propertyChanged = new ContextPropertyChanged();
         public event PropertyChangedEventHandler PropertyChanged
