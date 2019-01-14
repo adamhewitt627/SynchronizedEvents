@@ -24,7 +24,7 @@ namespace SynchronizedEvents
             return false;
         }
 
-        protected void RaisePropertyChanged([CallerMemberName] string propertyName = null)
-            => _propertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected async void RaisePropertyChanged([CallerMemberName] string propertyName = null)
+            => await _propertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName)).ConfigureAwait(false);
     }
 }

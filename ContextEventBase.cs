@@ -29,29 +29,32 @@ namespace SynchronizedEvents
             }
         }
 
-        public Task Invoke(object sender, TArgs args)
+        public async Task Invoke(object sender, TArgs args)
         {
             (SynchronizationContext context, THandler handler)[] handlers;
             lock (_handlers) handlers = _handlers.ToArray();
 
-            var tasks = handlers.GroupBy(x => x.context, x => x.handler).Select(g => invokeContext(g.Key, g));
-            return Task.WhenAll(tasks);
+            var tasks = handlers
+                .GroupBy(x => x.context, x => x.handler)
+                .Select(g => invokeContext(g.Key, g))
+                .ToList();
+            await Task.WhenAll(tasks).ConfigureAwait(false);
 
-            Task invokeContext(SynchronizationContext context, IEnumerable<THandler> l)
+            async Task invokeContext(SynchronizationContext context, IEnumerable<THandler> l)
             {
                 if (context != null)
                 {
-                    var tcs = new TaskCompletionSource<bool>();
+                    var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                     context.Post(o =>
                     {
                         try { invokeHandlers(l); tcs.TrySetResult(true); }
                         catch (Exception e) { tcs.TrySetException(e); }
                     }, null);
-                    return tcs.Task;
+                    await tcs.Task.ConfigureAwait(false);
                 }
                 else
                 {
-                    return Task.Run(() => invokeHandlers(l));
+                    await Task.Run(() => invokeHandlers(l)).ConfigureAwait(false);
                 }
             }
             void invokeHandlers(IEnumerable<THandler> l)
